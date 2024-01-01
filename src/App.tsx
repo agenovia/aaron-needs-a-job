@@ -1,6 +1,5 @@
-import { Flex, IconButton, VStack } from "@chakra-ui/react";
+import { Fade, Flex, Tab, TabList, Tabs, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaCommentDots } from "react-icons/fa6";
 import "./App.css";
 import ChatDrawerSection from "./components/Chat/ChatDrawerSection";
 import AddWorkHistoryButton from "./components/WorkHistory/AddWorkHistoryButton";
@@ -16,6 +15,7 @@ function App() {
   const [selectedChatItems, setSelectedChatItems] =
     useState<WorkHistoryFormValues[]>();
   const [replaceIndex, setReplaceIndex] = useState<number>();
+  const [tabsHidden, setTabsHidden] = useState(true);
 
   const flushReplace = () => {
     setSelectedEditHistory(undefined);
@@ -86,6 +86,12 @@ function App() {
   }, [workHistory, selectedEditHistory]);
 
   useEffect(() => {
+    setTimeout(() => {
+      setTabsHidden(false);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
     const storedHistory = localStorage.getItem("resumai-work-history");
     if (storedHistory) {
       setWorkHistory([...JSON.parse(storedHistory)]);
@@ -94,43 +100,58 @@ function App() {
   }, []);
 
   return (
-    <VStack spacing="24px">
-      <WorkHistoryForm
-        isOpen={modalOpen}
-        onClose={handleCloseForm}
-        onSubmit={handleSubmit}
-        workHistory={selectedEditHistory}
-        replaceIndex={replaceIndex}
-      />
-      <AddWorkHistoryButton onAddWorkHistory={handleAddNewEntry} />
-      <IconButton
-        aria-label="Chat about this job"
-        title="Chat about this job"
+    <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
+      <Fade in={!tabsHidden} transition={{ enter: { duration: 1, delay: 1 } }}>
+        <TabList
+          textAlign="center"
+          bgColor="tomato"
+          rounded="full"
+          hidden={tabsHidden}
+        >
+          <Tab>Ask Me Anything</Tab>
+          <Tab>Fit Check</Tab>
+        </TabList>
+      </Fade>
+
+      <VStack spacing="24px">
+        <WorkHistoryForm
+          isOpen={modalOpen}
+          onClose={handleCloseForm}
+          onSubmit={handleSubmit}
+          workHistory={selectedEditHistory}
+          replaceIndex={replaceIndex}
+        />
+        <AddWorkHistoryButton onAddWorkHistory={handleAddNewEntry} />
+        {/* <IconButton
+        aria-label="Ask me anything"
+        title="Ask me anything"
         rounded="full"
-        bgColor="transparent"
+        bgColor="palegreen"
+        size="lg"
         icon={<FaCommentDots />}
         onClick={() => handleOpenChat(workHistory)}
-      />
-      <Flex direction="column" align="left" m={4} pl={10} pr={10}>
-        {workHistory.map((item, idx) => (
-          <WorkTimelineItem
-            expanded={false}
-            key={idx}
-            index={idx}
-            workHistoryItem={item}
-            onChatClick={handleOpenChat}
-            onDelete={handleDeleteEntry}
-            onEdit={handleEditEntry}
+      /> */}
+        <Flex direction="column" align="left" m={4} pl={10} pr={10}>
+          {workHistory.map((item, idx) => (
+            <WorkTimelineItem
+              expanded={false}
+              key={idx}
+              index={idx}
+              workHistoryItem={item}
+              onChatClick={handleOpenChat}
+              onDelete={handleDeleteEntry}
+              onEdit={handleEditEntry}
+            />
+          ))}
+        </Flex>
+        {selectedChatItems && (
+          <ChatDrawerSection
+            workHistoryItems={selectedChatItems}
+            handleCloseChat={handleCloseChat}
           />
-        ))}
-      </Flex>
-      {selectedChatItems && (
-        <ChatDrawerSection
-          workHistoryItems={selectedChatItems}
-          handleCloseChat={handleCloseChat}
-        />
-      )}
-    </VStack>
+        )}
+      </VStack>
+    </Tabs>
   );
 }
 

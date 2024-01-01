@@ -99,9 +99,17 @@ class TimelineItemRetriever extends OpenAIClient {
       input: "What are your top skills?",
       output: "general",
     },
+    {
+      input: "Do you fit the requirements below?",
+      output: "general",
+    },
+    {
+      input: "I'm looking for a candidate with the following requirements",
+      output: "general",
+    },
   ];
   questionClassificationPrompt = new FewShotChatMessagePromptTemplate({
-    prefix: `Classify the user's query into "general", "specific" or "unclear". The broader the scope of the \
+    prefix: `Classify the user's query into "general" or "specific". The broader the scope of the \
         user's query, the more "general" it is; likewise, the more targetted the search terms, the \
         more "specific" it is.`,
     suffix: "Human: {input}",

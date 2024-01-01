@@ -1,9 +1,8 @@
 import {
   Box,
   Center,
+  HStack,
   IconButton,
-  InputGroup,
-  InputRightAddon,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
@@ -98,7 +97,7 @@ const ChatBox = ({ workHistoryItems }: Props) => {
     if (query.trim() === "") return;
     const message = {
       from: "user",
-      text: query,
+      text: query.trim(),
       seq: chatHistory.length + 1,
     } as ChatMessage;
     setChatHistory([...chatHistory, message]);
@@ -125,7 +124,7 @@ const ChatBox = ({ workHistoryItems }: Props) => {
           ))}
           {isLoading && <ChatMessage isLoading={isLoading} />}
         </Box>
-        <InputGroup>
+        <HStack w="inherit">
           <Textarea
             className={!isLoading ? "ripple" : ""}
             bgColor="gray.300"
@@ -135,27 +134,26 @@ const ChatBox = ({ workHistoryItems }: Props) => {
             placeholder={isLoading ? "Thinking..." : "Ask a question"}
             onChange={(e) => setQuery(e.target.value)}
             value={query}
+            resize={"none"}
             isDisabled={isLoading}
+            height="150px"
           />
-          <InputRightAddon>
-            {isLoading ? (
-              <PuffLoader
-                cssOverride={{ opacity: 0.5 }}
-                color="black"
-                size="25px"
-              />
-            ) : (
-              <IconButton
-                aria-label="send-query"
-                title="Send Query"
-                icon={<LuSend />}
-                size="25px"
-                variant="ghost"
-                onClick={() => handleSend()}
-              />
-            )}
-          </InputRightAddon>
-        </InputGroup>
+          {isLoading ? (
+            <PuffLoader
+              cssOverride={{ opacity: 0.5 }}
+              color="black"
+              size="25px"
+            />
+          ) : (
+            <IconButton
+              aria-label="send-query"
+              title="Send Query"
+              icon={<LuSend />}
+              h="100%"
+              onClick={() => handleSend()}
+            />
+          )}
+        </HStack>
       </VStack>
     </Center>
   );

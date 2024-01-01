@@ -1,5 +1,6 @@
-import { Flex, VStack } from "@chakra-ui/react";
+import { Flex, IconButton, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { FaCommentDots } from "react-icons/fa6";
 import "./App.css";
 import ChatDrawerSection from "./components/Chat/ChatDrawerSection";
 import AddWorkHistoryButton from "./components/WorkHistory/AddWorkHistoryButton";
@@ -12,8 +13,8 @@ function App() {
   const [workHistory, setWorkHistory] = useState<WorkHistoryFormValues[]>([]);
   const [selectedEditHistory, setSelectedEditHistory] =
     useState<WorkHistoryFormValues>();
-  const [selectedChatItem, setSelectedChatItem] =
-    useState<WorkHistoryFormValues>();
+  const [selectedChatItems, setSelectedChatItems] =
+    useState<WorkHistoryFormValues[]>();
   const [replaceIndex, setReplaceIndex] = useState<number>();
 
   const flushReplace = () => {
@@ -70,12 +71,12 @@ function App() {
     setModalOpen(false);
   };
 
-  const handleOpenChat = (workHistoryItem: WorkHistoryFormValues) => {
-    setSelectedChatItem(workHistoryItem);
+  const handleOpenChat = (workHistoryItems: WorkHistoryFormValues[]) => {
+    setSelectedChatItems(workHistoryItems);
   };
 
   const handleCloseChat = () => {
-    setSelectedChatItem(undefined);
+    setSelectedChatItems(undefined);
   };
 
   useEffect(() => {
@@ -102,6 +103,14 @@ function App() {
         replaceIndex={replaceIndex}
       />
       <AddWorkHistoryButton onAddWorkHistory={handleAddNewEntry} />
+      <IconButton
+        aria-label="Chat about this job"
+        title="Chat about this job"
+        rounded="full"
+        bgColor="transparent"
+        icon={<FaCommentDots />}
+        onClick={() => handleOpenChat(workHistory)}
+      />
       <Flex direction="column" align="left" m={4} pl={10} pr={10}>
         {workHistory.map((item, idx) => (
           <WorkTimelineItem
@@ -115,10 +124,12 @@ function App() {
           />
         ))}
       </Flex>
-      <ChatDrawerSection
-        selectedChatItem={selectedChatItem}
-        handleCloseChat={handleCloseChat}
-      />
+      {selectedChatItems && (
+        <ChatDrawerSection
+          workHistoryItems={selectedChatItems}
+          handleCloseChat={handleCloseChat}
+        />
+      )}
     </VStack>
   );
 }

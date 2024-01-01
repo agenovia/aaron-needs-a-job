@@ -30,7 +30,7 @@ interface Props {
   onDelete: (entry: WorkHistoryFormValues) => void;
   onEdit: (entry: WorkHistoryFormValues) => void;
   onChatClick: (
-    workHistory: WorkHistoryFormValues,
+    workHistory: WorkHistoryFormValues[],
     metadataFilter?: Record<string, unknown>
   ) => void;
 }

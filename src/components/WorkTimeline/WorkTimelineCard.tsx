@@ -22,7 +22,7 @@ import "./styles.css";
 interface Props {
   workHistoryItem: WorkHistoryFormValues;
   onChatClick?: (
-    workHistory: WorkHistoryFormValues,
+    workHistory: WorkHistoryFormValues[],
     metadataFilter?: Record<string, unknown>
   ) => void;
 }
@@ -59,13 +59,7 @@ const WorkTimelineCard = ({ workHistoryItem, onChatClick }: Props) => {
   }, []);
 
   return (
-    <Box
-      w="inherit"
-      maxW="inherit"
-      maxH="inherit"
-      className="main-card"
-      overflowY="scroll"
-    >
+    <Box w="inherit" maxW="inherit" className="main-card">
       <Card w="inherit">
         {/* <VStack> */}
         <CardHeader>
@@ -108,7 +102,7 @@ const WorkTimelineCard = ({ workHistoryItem, onChatClick }: Props) => {
                       rounded="full"
                       bgColor="transparent"
                       icon={<FaCommentDots />}
-                      onClick={() => onChatClick(workHistoryItem)}
+                      onClick={() => onChatClick([workHistoryItem])}
                     />
                   </WrapItem>
                 )}

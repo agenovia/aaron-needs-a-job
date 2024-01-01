@@ -1,4 +1,5 @@
 import {
+  Box,
   Drawer,
   DrawerCloseButton,
   DrawerContent,
@@ -10,17 +11,17 @@ import WorkTimelineCard from "../WorkTimeline/WorkTimelineCard";
 import ChatBox from "./ChatBox";
 
 interface Props {
-  selectedChatItem: WorkHistoryFormValues | undefined;
+  workHistoryItems?: WorkHistoryFormValues[];
   handleCloseChat: () => void;
 }
 
-const ChatDrawerSection = ({ selectedChatItem, handleCloseChat }: Props) => {
+const ChatDrawerSection = ({ workHistoryItems, handleCloseChat }: Props) => {
   return (
     <Drawer
       placement="right"
       size="full"
       onClose={handleCloseChat}
-      isOpen={selectedChatItem !== undefined}
+      isOpen={!!workHistoryItems}
     >
       <DrawerOverlay />
       <DrawerContent
@@ -38,7 +39,7 @@ const ChatDrawerSection = ({ selectedChatItem, handleCloseChat }: Props) => {
           },
         }}
       >
-        {selectedChatItem && (
+        {workHistoryItems && (
           <>
             <DrawerCloseButton
               title="Close Chat"
@@ -48,8 +49,12 @@ const ChatDrawerSection = ({ selectedChatItem, handleCloseChat }: Props) => {
               rounded="full"
             />
             <HStack m={4} justifyContent="space-between">
-              <WorkTimelineCard workHistoryItem={selectedChatItem} />
-              <ChatBox workHistory={selectedChatItem} />
+              <Box maxH="80vh" overflowY="scroll" boxShadow="lg" p={1}>
+                {workHistoryItems.map((item) => (
+                  <WorkTimelineCard workHistoryItem={item} />
+                ))}
+              </Box>
+              <ChatBox workHistoryItems={workHistoryItems} />
             </HStack>
           </>
         )}

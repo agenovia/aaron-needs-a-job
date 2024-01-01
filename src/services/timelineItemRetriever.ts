@@ -25,7 +25,7 @@ export interface Response {
 }
 
 class TimelineItemRetriever extends OpenAIClient {
-  workHistory: WorkHistoryFormValues;
+  workHistory: WorkHistoryFormValues[];
   vectorStore: MemoryVectorStore | null = null;
   memory: BufferMemory;
   documents: Document[] = [];
@@ -92,24 +92,16 @@ class TimelineItemRetriever extends OpenAIClient {
       output: "general",
     },
     {
+      input: "What is your experience with web development?",
+      output: "general",
+    },
+    {
       input: "What are your top skills?",
       output: "general",
     },
-    {
-      input: "Tell me about your Java experience",
-      output: "general",
-    },
-    {
-      input: "What's your experience with Python?",
-      output: "general",
-    },
-    {
-      input: "How did you use C++ to solve a particular problem?",
-      output: "specific",
-    },
   ];
   questionClassificationPrompt = new FewShotChatMessagePromptTemplate({
-    prefix: `Classify the user's query into "general" or "specific". The broader the scope of the \
+    prefix: `Classify the user's query into "general", "specific" or "unclear". The broader the scope of the \
         user's query, the more "general" it is; likewise, the more targetted the search terms, the \
         more "specific" it is.`,
     suffix: "Human: {input}",
@@ -118,7 +110,7 @@ class TimelineItemRetriever extends OpenAIClient {
     inputVariables: ["input"],
   });
 
-  constructor(workHistory: WorkHistoryFormValues) {
+  constructor(workHistory: WorkHistoryFormValues[]) {
     super(import.meta.env.VITE_OPENAI_KEY);
     this.workHistory = workHistory;
     this.memory = new BufferMemory({
@@ -237,21 +229,26 @@ class TimelineItemRetriever extends OpenAIClient {
   }
 
   getDocuments = () => {
-    return this.workHistory.accomplishments.map(
-      (a) =>
-        new Document({
-          pageContent: `${a.headline}: ${a.context}`,
-          metadata: {
-            company: this.workHistory.company,
-            jobTitle: this.workHistory.jobTitle,
-            startDate: this.workHistory.startDate,
-            endDate: this.workHistory.endDate,
-            headline: a.headline,
-            skills: a.skills,
-            section: "accomplishments",
-          },
-        })
-    );
+    let docs: Array<Document> = [];
+    this.workHistory.forEach((v) => {
+      let _docs = v.accomplishments.map(
+        (a) =>
+          new Document({
+            pageContent: `${a.headline}: ${a.context}`,
+            metadata: {
+              company: v.company,
+              jobTitle: v.jobTitle,
+              startDate: v.startDate,
+              endDate: v.endDate,
+              headline: a.headline,
+              skills: a.skills,
+              section: "accomplishments",
+            },
+          })
+      );
+      docs = [...docs, ..._docs];
+    });
+    return docs;
   };
 
   fetchSelfQueryRetriever = async () => {

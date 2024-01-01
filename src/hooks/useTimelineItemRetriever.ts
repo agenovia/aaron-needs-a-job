@@ -4,7 +4,7 @@ import WorkHistoryFormValues from "../components/WorkHistory/types";
 import TimelineItemRetriever from "../services/timelineItemRetriever";
 
 interface Props {
-  workHistory: WorkHistoryFormValues;
+  workHistory: WorkHistoryFormValues[];
 }
 
 const useTimelineItemRetriever = ({ workHistory }: Props) => {

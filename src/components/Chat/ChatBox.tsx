@@ -2,9 +2,9 @@ import {
   Box,
   Center,
   IconButton,
-  Input,
   InputGroup,
-  InputRightElement,
+  InputRightAddon,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { BaseMessage } from "langchain/schema";
@@ -18,13 +18,16 @@ import ChatMessage from "./ChatMessage";
 import "./animations.css";
 
 interface Props {
-  workHistory: WorkHistoryFormValues;
+  workHistoryItems: WorkHistoryFormValues[];
+  fitCheckForm?: boolean;
 }
 
-const ChatBox = ({ workHistory }: Props) => {
+const ChatBox = ({ workHistoryItems }: Props) => {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [query, setQuery] = useState("");
-  const { retriever } = useTimelineItemRetriever({ workHistory });
+  const { retriever } = useTimelineItemRetriever({
+    workHistory: workHistoryItems,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
@@ -104,13 +107,16 @@ const ChatBox = ({ workHistory }: Props) => {
   };
   return (
     <Center>
-      <VStack>
+      <VStack h="90vh" w="60vw">
         <Box
           borderRadius={10}
           bgColor="gray.200"
           shadow="lg"
           overflowY="scroll"
+          minH="40vh"
+          maxH="80vh"
           h="80vh"
+          minW="60vw"
           w="60vw"
           ref={chatWindowRef}
         >
@@ -120,23 +126,18 @@ const ChatBox = ({ workHistory }: Props) => {
           {isLoading && <ChatMessage isLoading={isLoading} />}
         </Box>
         <InputGroup>
-          <Input
+          <Textarea
             className={!isLoading ? "ripple" : ""}
             bgColor="gray.300"
             variant="outline"
             shadow="lg"
             title={isLoading ? "🤔" : "Ask a question"}
             placeholder={isLoading ? "Thinking..." : "Ask a question"}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                handleSend();
-              }
-            }}
             onChange={(e) => setQuery(e.target.value)}
             value={query}
             isDisabled={isLoading}
           />
-          <InputRightElement>
+          <InputRightAddon>
             {isLoading ? (
               <PuffLoader
                 cssOverride={{ opacity: 0.5 }}
@@ -153,7 +154,7 @@ const ChatBox = ({ workHistory }: Props) => {
                 onClick={() => handleSend()}
               />
             )}
-          </InputRightElement>
+          </InputRightAddon>
         </InputGroup>
       </VStack>
     </Center>

@@ -3,7 +3,9 @@ import {
   Center,
   HStack,
   IconButton,
-  Textarea,
+  Input,
+  InputGroup,
+  InputRightElement,
   VStack,
 } from "@chakra-ui/react";
 import { BaseMessage } from "langchain/schema";
@@ -125,34 +127,43 @@ const ChatBox = ({ workHistoryItems }: Props) => {
           {isLoading && <ChatMessage isLoading={isLoading} />}
         </Box>
         <HStack w="inherit">
-          <Textarea
-            className={!isLoading ? "ripple" : ""}
-            bgColor="gray.300"
-            variant="outline"
-            shadow="lg"
-            title={isLoading ? "🤔" : "Ask a question"}
-            placeholder={isLoading ? "Thinking..." : "Ask a question"}
-            onChange={(e) => setQuery(e.target.value)}
-            value={query}
-            resize={"none"}
-            isDisabled={isLoading}
-            height="150px"
-          />
-          {isLoading ? (
-            <PuffLoader
-              cssOverride={{ opacity: 0.5 }}
-              color="black"
-              size="25px"
+          <InputGroup>
+            <Input
+              className={!isLoading ? "ripple" : ""}
+              bgColor="gray.300"
+              variant="outline"
+              shadow="lg"
+              title={isLoading ? "🤔" : "Ask a question"}
+              placeholder={isLoading ? "Thinking..." : "Ask a question"}
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
+              isDisabled={isLoading}
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  handleSend();
+                }
+              }}
             />
-          ) : (
-            <IconButton
-              aria-label="send-query"
-              title="Send Query"
-              icon={<LuSend />}
-              h="100%"
-              onClick={() => handleSend()}
-            />
-          )}
+            <InputRightElement>
+              {isLoading ? (
+                <PuffLoader
+                  cssOverride={{ opacity: 0.5 }}
+                  color="black"
+                  size="25px"
+                />
+              ) : (
+                <IconButton
+                  aria-label="send-query"
+                  title="Send Query"
+                  icon={<LuSend />}
+                  h="100%"
+                  variant="ghost"
+                  rounded="full"
+                  onClick={() => handleSend()}
+                />
+              )}
+            </InputRightElement>
+          </InputGroup>
         </HStack>
       </VStack>
     </Center>

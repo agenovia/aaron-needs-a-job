@@ -422,8 +422,16 @@ class TimelineItemRetriever extends OpenAIClient {
     return response;
   };
 
-  ask = async (question: string): Promise<Response> => {
-    const response = await this.qaChain.invoke({ question });
+  ask = async (
+    question: string,
+    overrideBranch?: boolean
+  ): Promise<Response> => {
+    let response;
+    if (overrideBranch) {
+      response = await this.generalSequence.invoke({ question });
+    } else {
+      response = await this.qaChain.invoke({ question });
+    }
     if (response.sourceDocuments.length === 0) {
       return await this.generalChain.invoke({ question });
     }

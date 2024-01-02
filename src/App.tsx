@@ -1,7 +1,18 @@
-import { Fade, Flex, Tab, TabList, Tabs, VStack } from "@chakra-ui/react";
+import {
+  Center,
+  Fade,
+  Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  VStack,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import "./App.css";
 import ChatDrawerSection from "./components/Chat/ChatDrawerSection";
+import FitCheck from "./components/FitCheck/FitCheck";
 import AddWorkHistoryButton from "./components/WorkHistory/AddWorkHistoryButton";
 import WorkHistoryForm from "./components/WorkHistory/WorkHistoryForm";
 import WorkHistoryFormValues from "./components/WorkHistory/types";
@@ -100,63 +111,59 @@ function App() {
   }, []);
 
   return (
-    <Tabs
-      variant="soft-rounded"
-      colorScheme="orange"
-      minWidth="400px"
-      width="600px"
-      isFitted
-    >
-      <Fade in={!tabsHidden} transition={{ enter: { duration: 1, delay: 1 } }}>
-        <TabList
-          textAlign="center"
-          bgColor="tomato"
-          rounded="full"
-          hidden={tabsHidden}
-        >
-          <Tab>Ask Me Anything</Tab>
-          <Tab>Fit Check</Tab>
-        </TabList>
+    <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
+      <Fade in={!tabsHidden} transition={{ enter: { duration: 2, delay: 1 } }}>
+        <Center>
+          <TabList
+            textAlign="center"
+            bgColor="tomato"
+            rounded="full"
+            minWidth="400px"
+            width="600px"
+            hidden={tabsHidden}
+          >
+            <Tab>Ask Me Anything</Tab>
+            <Tab>Fit Check</Tab>
+          </TabList>
+        </Center>
       </Fade>
 
-      <VStack spacing="24px">
-        <WorkHistoryForm
-          isOpen={modalOpen}
-          onClose={handleCloseForm}
-          onSubmit={handleSubmit}
-          workHistory={selectedEditHistory}
-          replaceIndex={replaceIndex}
-        />
-        <AddWorkHistoryButton onAddWorkHistory={handleAddNewEntry} />
-        {/* <IconButton
-        aria-label="Ask me anything"
-        title="Ask me anything"
-        rounded="full"
-        bgColor="palegreen"
-        size="lg"
-        icon={<FaCommentDots />}
-        onClick={() => handleOpenChat(workHistory)}
-      /> */}
-        <Flex direction="column" align="left" m={4} pl={10} pr={10}>
-          {workHistory.map((item, idx) => (
-            <WorkTimelineItem
-              expanded={false}
-              key={idx}
-              index={idx}
-              workHistoryItem={item}
-              onChatClick={handleOpenChat}
-              onDelete={handleDeleteEntry}
-              onEdit={handleEditEntry}
+      <TabPanels>
+        <TabPanel>
+          <VStack spacing="24px">
+            <WorkHistoryForm
+              isOpen={modalOpen}
+              onClose={handleCloseForm}
+              onSubmit={handleSubmit}
+              workHistory={selectedEditHistory}
+              replaceIndex={replaceIndex}
             />
-          ))}
-        </Flex>
-        {selectedChatItems && (
-          <ChatDrawerSection
-            workHistoryItems={selectedChatItems}
-            handleCloseChat={handleCloseChat}
-          />
-        )}
-      </VStack>
+            <AddWorkHistoryButton onAddWorkHistory={handleAddNewEntry} />
+            <Flex direction="column" align="left" m={4} pl={10} pr={10}>
+              {workHistory.map((item, idx) => (
+                <WorkTimelineItem
+                  expanded={false}
+                  key={idx}
+                  index={idx}
+                  workHistoryItem={item}
+                  onChatClick={handleOpenChat}
+                  onDelete={handleDeleteEntry}
+                  onEdit={handleEditEntry}
+                />
+              ))}
+            </Flex>
+            {selectedChatItems && (
+              <ChatDrawerSection
+                workHistoryItems={selectedChatItems}
+                handleCloseChat={handleCloseChat}
+              />
+            )}
+          </VStack>
+        </TabPanel>
+        <TabPanel>
+          <FitCheck workHistoryItems={workHistory}></FitCheck>
+        </TabPanel>
+      </TabPanels>
     </Tabs>
   );
 }

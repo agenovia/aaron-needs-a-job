@@ -100,7 +100,13 @@ function App() {
   }, []);
 
   return (
-    <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
+    <Tabs
+      variant="soft-rounded"
+      colorScheme="orange"
+      minWidth="400px"
+      width="600px"
+      isFitted
+    >
       <Fade in={!tabsHidden} transition={{ enter: { duration: 1, delay: 1 } }}>
         <TabList
           textAlign="center"

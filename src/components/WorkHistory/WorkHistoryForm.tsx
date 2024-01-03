@@ -15,7 +15,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import WorkAccomplishmentsList from "./WorkAccomplishmentsList";
 import { placeholders } from "./constants";
@@ -38,6 +38,13 @@ const WorkHistoryForm = ({
 }: Props) => {
   const [isCurrentJob, setCurrentJob] = useState(false);
   const [currentEndDate, setEndDate] = useState<string>("");
+  const [extraDescriptionContext, setExtraDescriptionContext] =
+    useState<boolean>(
+      workHistory?.descriptionContext
+        ? workHistory?.descriptionContext.length > 0
+        : false
+    );
+  const extraDescriptionContextRef = useRef<HTMLInputElement>(null);
 
   const {
     handleSubmit,
@@ -181,6 +188,34 @@ const WorkHistoryForm = ({
                   height="200px"
                 />
               </FormControl>
+              <FormControl mb={4}>
+                <Checkbox
+                  defaultChecked={extraDescriptionContext}
+                  ref={extraDescriptionContextRef}
+                  onChange={() =>
+                    setExtraDescriptionContext(
+                      extraDescriptionContextRef.current?.checked ?? false
+                    )
+                  }
+                >
+                  Add extra context for responsibilities
+                </Checkbox>
+              </FormControl>
+
+              {extraDescriptionContext && (
+                <FormControl mb={4} isRequired={extraDescriptionContext}>
+                  <FormLabel>Extra Context</FormLabel>
+                  <Textarea
+                    id="descriptionContext"
+                    {...register("descriptionContext", {
+                      required: extraDescriptionContext,
+                    })}
+                    mb={2}
+                    height="200px"
+                  />
+                </FormControl>
+              )}
+
               <FormControl mb={4}>
                 <FormLabel>Personal Note</FormLabel>
                 <Textarea

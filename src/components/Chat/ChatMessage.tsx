@@ -36,7 +36,10 @@ const ContextCards = ({ sourceDocuments }: ContextCard) => {
                 <Text fontSize="8px" as="sup" pr={1}>
                   {idx + 1}
                 </Text>
-                <Text as="span">{x.metadata.headline}</Text>
+                <Text as="span">
+                  {x.metadata.headline ??
+                    `Work responsibilities as ${x.metadata.jobTitle} at ${x.metadata.company}`}
+                </Text>
               </div>
             ))}
             {!seeMore && secondary.length > 0 && (
@@ -50,7 +53,10 @@ const ContextCards = ({ sourceDocuments }: ContextCard) => {
                   <Text fontSize="8px" as="sup" pr={1}>
                     {primary.length + idx + 1}
                   </Text>
-                  <Text as="span">{x.metadata.headline}</Text>
+                  <Text as="span">
+                    {x.metadata.headline ??
+                      `Work responsibilities as ${x.metadata.jobTitle} at ${x.metadata.company}`}
+                  </Text>
                 </div>
               ))}
             {seeMore && (

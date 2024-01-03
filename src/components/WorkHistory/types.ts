@@ -5,6 +5,7 @@ type WorkHistoryFormValues = {
   startDate: string;
   endDate: string;
   description: string[];
+  descriptionContext?: string;
   accomplishments: WorkAccomplishment[];
 };
 

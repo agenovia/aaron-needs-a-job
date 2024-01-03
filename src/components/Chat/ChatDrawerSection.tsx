@@ -50,8 +50,11 @@ const ChatDrawerSection = ({ workHistoryItems, handleCloseChat }: Props) => {
             />
             <HStack m={4} justifyContent="space-between">
               <Box maxH="80vh" overflowY="scroll" boxShadow="lg" p={1}>
-                {workHistoryItems.map((item) => (
-                  <WorkTimelineCard workHistoryItem={item} />
+                {workHistoryItems.map((item, idx) => (
+                  <WorkTimelineCard
+                    key={`chat-drawer-card-${idx}`}
+                    workHistoryItem={item}
+                  />
                 ))}
               </Box>
               <ChatBox workHistoryItems={workHistoryItems} />

@@ -239,7 +239,7 @@ class TimelineItemRetriever extends OpenAIClient {
   getDocuments = () => {
     let docs: Array<Document> = [];
     this.workHistory.forEach((v) => {
-      let _docs = v.accomplishments.map(
+      let _accomplishments = v.accomplishments.map(
         (a) =>
           new Document({
             pageContent: `${a.headline}: ${a.context}`,
@@ -254,7 +254,20 @@ class TimelineItemRetriever extends OpenAIClient {
             },
           })
       );
-      docs = [...docs, ..._docs];
+      let _responsibilities = new Document({
+        pageContent: `List of responsibilities: ${v.description.join(", ")}\n\
+        Context for responsibilities: ${v.descriptionContext}`,
+        metadata: {
+          company: v.company,
+          jobTitle: v.jobTitle,
+          startDate: v.startDate,
+          endDate: v.endDate,
+          description: v.description,
+          descriptionContext: v.descriptionContext,
+          section: "responsibilities",
+        },
+      });
+      docs = [...docs, ..._accomplishments, _responsibilities];
     });
     return docs;
   };

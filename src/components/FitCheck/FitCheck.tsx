@@ -86,6 +86,7 @@ const FitCheck = ({ workHistoryItems }: Props) => {
             />
           ) : (
             <IconButton
+              className="ripple"
               aria-label="submit"
               title="Submit"
               icon={<LuSend />}

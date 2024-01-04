@@ -1,23 +1,14 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Box,
-  Button,
   Flex,
   HStack,
   Icon,
-  IconButton,
   SlideFade,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { GoDot, GoDotFill, GoPencil, GoTrash } from "react-icons/go";
+import { useEffect, useState } from "react";
+import { GoDot, GoDotFill } from "react-icons/go";
 
 import WorkHistoryFormValues from "../WorkHistory/types";
 import "./styles.css";
@@ -27,8 +18,8 @@ interface Props {
   workHistoryItem: WorkHistoryFormValues;
   expanded: boolean;
   index: number;
-  onDelete: (entry: WorkHistoryFormValues) => void;
-  onEdit: (entry: WorkHistoryFormValues) => void;
+  onDelete?: (entry: WorkHistoryFormValues) => void;
+  onEdit?: (entry: WorkHistoryFormValues) => void;
   onChatClick: (
     workHistory: WorkHistoryFormValues[],
     metadataFilter?: Record<string, unknown>
@@ -39,17 +30,9 @@ const WorkTimelineItem = ({
   workHistoryItem,
   expanded,
   index,
-  onDelete,
-  onEdit,
   onChatClick,
 }: Props) => {
   const [isExpanded, setExpanded] = useState(expanded);
-  const {
-    isOpen: alertIsOpen,
-    onOpen: alertOnOpen,
-    onClose: alertOnClose,
-  } = useDisclosure();
-  const cancelRef = useRef(null);
   const isCurrent = workHistoryItem.endDate.length === 0;
   const delayMultiplier = Math.max(+(0.75 / (index + 1)).toFixed(2), 0.05);
 
@@ -86,11 +69,6 @@ const WorkTimelineItem = ({
     } else {
       return "Less than 1 month";
     }
-  };
-
-  const handleDelete = () => {
-    alertOnClose();
-    onDelete(workHistoryItem);
   };
 
   return (
@@ -147,26 +125,6 @@ const WorkTimelineItem = ({
                   workHistoryItem={workHistoryItem}
                   onChatClick={onChatClick}
                 />
-                <HStack spacing={2}>
-                  <IconButton
-                    aria-label="Delete this entry"
-                    title="Delete this entry"
-                    icon={<GoTrash />}
-                    onClick={alertOnOpen}
-                    rounded="full"
-                    colorScheme="red"
-                    size="xs"
-                  />
-                  <IconButton
-                    aria-label="Edit this entry"
-                    title="Edit this entry"
-                    icon={<GoPencil />}
-                    onClick={() => onEdit(workHistoryItem)}
-                    rounded="full"
-                    size="xs"
-                    colorScheme="orange"
-                  />
-                </HStack>
               </VStack>
             </Flex>
           </Flex>
@@ -176,37 +134,6 @@ const WorkTimelineItem = ({
             <Icon as={GoDot} position="absolute" />
             <Text pl="20px">{workHistoryItem.startDate}</Text>
           </HStack>
-          <AlertDialog
-            isOpen={alertIsOpen}
-            leastDestructiveRef={cancelRef}
-            onClose={alertOnClose}
-          >
-            <AlertDialogOverlay>
-              <AlertDialogContent>
-                <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                  Delete entry{" "}
-                  <Text as="i" color="tomato">
-                    {workHistoryItem.jobTitle}
-                  </Text>{" "}
-                  at{" "}
-                  <Text as="i" color="tomato">
-                    {workHistoryItem.company}
-                  </Text>
-                </AlertDialogHeader>
-                <AlertDialogBody>
-                  Deletion cannot be undone. Press Delete to confirm.
-                </AlertDialogBody>
-                <AlertDialogFooter>
-                  <Button ref={cancelRef} onClick={alertOnClose}>
-                    Cancel
-                  </Button>
-                  <Button colorScheme="red" onClick={handleDelete} ml={3}>
-                    Delete
-                  </Button>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialogOverlay>
-          </AlertDialog>
         </Flex>
       </Box>
     </SlideFade>

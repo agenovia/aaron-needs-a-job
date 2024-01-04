@@ -1,0 +1,164 @@
+[
+  {
+    "accomplishments": [
+      {
+        "headline": "Spearheaded an ETL project, leveraging Python and gRPC to improve data freshness of operational reporting tables by 99.2% (10-hour lag to 5-minute lag).",
+        "context": "Our reporting tables for production issues relied on data extracts that occurred at most once every 10 hours, resulting in stale data. While the tables were useful for analyzing trends over a period of days, weeks and months, it did not capture issues that occur in the middle of the day. This posed a problem as it necessitated the vigilant eye of an operator to alert the team of high-severity issues occurring in the middle of the day. My task was to improve data freshness by any approach. The approach I chose was to use the source tables directly, through the use of gRPC. The direct tables are not SQL-queryable which posed a problem for the TPM team as SQL was their main tool; however, with the use of Python, I managed to create an extract that could run at most once every 5 minutes to capture fast-moving issues and reducing the lag from 10 hours to a mere 5 minutes (99.2% reduction). These tables allowed us to more accurately capture issues occurring in the middle of the day and relieved some responsibility from the already-burdened on-call operator. ",
+        "skills": [
+          "python",
+          "sql",
+          "grpc",
+          "data collection",
+          "data analysis"
+        ]
+      },
+      {
+        "headline": "Automated the process of identifying and notifying teams of upcoming datacenter migrations",
+        "context": "Datacenter migrations are a commonplace occurrence, and teams must be given ample notification and support before the deadline. To facilitate this and ease the burden of the Technical Project Managers, I created an automated process for identifying potentially affected teams by their resource footprint, and automate the sending of notifications through the bug tracker system. I primarily used Python as an API client to interact with several APIs via gRPC. My deep knowledge of automation gained from previous experience helped massively with these efforts that used to require significant manual work.",
+        "skills": [
+          "python",
+          "sql",
+          "grpc"
+        ]
+      }
+    ],
+    "company": "YouTube",
+    "jobTitle": "Product Support Specialist",
+    "startDate": "2021-02-01",
+    "endDate": "2022-04-01",
+    "description": [
+      " Assisted technical project managers (TPM) in managing cloud resources",
+      " Assisted software engineers in resource-related issues",
+      " Served on an on-call rotation for addressing production issues",
+      " Triaged support for high-severity issues",
+      " Created and maintained dashboards for tracking operational efficiency in Looker Studio",
+      " Created on-boarding documentation and trained new full-time and temporary staff"
+    ],
+    "descriptionContext": "In this role, I primarily collaborated with Technical Project Managers (TPM) to ensure the health of YouTube's resource \"fleet\". In this role I, along with other TPMs, served as a Product Association Resource Manager (PARM)--this entailed managing Google Cloud Platform (GCP) resources and ensuring that software engineering teams had what they needed, and also identifying opportunities for saving and optimizing resource allocations. The role also entailed managing resource supply in the form of resource ordering and assimilation (converting hardware to cloud resources). On top of that, the role involved constant communication with not just software engineers, but other project managers and PARMs. The role also necessitated a deep understanding of Google's infrastructure and how GCP works under the hood. Additionally, I assimilated into the team so rapidly that I was responsible for creating new-hire documentation and was responsible for partially training two full-time and three temporary staff--helping them get acclimated to the job responsibilities, coaching them on procedure and providing support. Lastly, I was also responsible for creating and maintaining dashboards that track our operational efficiency in Looker Studio. Overall, this was an interesting role as it required deep technical knowledge and soft-skills like teamwork, communication, negotiation, and conflict resolution.",
+    "personalNote": ""
+  },
+  {
+    "accomplishments": [
+      {
+        "headline": "Developed a Python REST API client for interfacing with TriZetto QNXT 8.7 (claims processing platform) to automate user acceptance testing (UAT) and quality assurance (QA) testing suites.",
+        "context": "My department, the IT department, had recently pushed an initiative to upgrade to the newest QNXT version. This version (version 8.7) had significant changes in certain core functionality that we wanted to test rigorously before making the switch and to assuage user concerns about usability and responsiveness. My goal was to facilitate quality assurance and user acceptance testing by creating a suite of tools that allowed us to rapidly test use cases and edge cases in a programmatic way. To do this, I created a Python API client that communicated with the QNXT backend via a REST API. This approach allowed for rapid testing of use cases to be carried out without much operator effort, greatly improving the speed at which we performed QA and UAT testing for the project. ",
+        "skills": [
+          "python",
+          "rest",
+          "quality assurance",
+          "qa",
+          "user acceptance testing",
+          "uat"
+        ]
+      },
+      {
+        "headline": "Resolved 600+ hours of technical debt by leading the upgrade project of ActiveBatch, successfully migrating from V9 to V12",
+        "context": "ActiveBatch, the job scheduler platform used by the company, was behind 3 major versions and was quickly nearing its end of life for support. The challenges of upgrading this crucial system riddled with legacy code were myriad, but among the most challenging were: (1) the patchwork of code necessary on the legacy system for certain integrations, particularly with Microsoft SQL server, that needed to be tested on the new system; (2) its tightly-coupled ecosystem of legacy jobs that made unit testing difficult, if not downright impossible without significant refactoring of the codebase; (3) nonexistent documentation on some of the most business-crucial jobs; (4) at least 30% of the jobs were redundant or defunct and needed to be identified and removed. A task force including myself, two other analysts, and a rotation of developers familiar with certain parts of the most business-critical jobs was formed. As the subject matter expert of IT operations automation, I took on the role of principal developer, utilizing Python and the ActiveBatch COM API to build a library of tools to assist with the migration. Migration would be done piecemeal, monitoring along the way. The tools I developed became integral as it allowed us to programmatically migrate logical units of jobs simultaneously and track their performance on the new system; rolling it back would be just as effortless. With months of work documenting, planning, housekeeping, corresponding with ActiveBatch's support team and developing the proper tools, we successfully migrated all the objects and improved the codebase while we were at it. Besides the pure technical challenge of this undertaking, we pulled through with great teamwork.",
+        "skills": [
+          "project management",
+          "communication",
+          "python",
+          "SQL"
+        ]
+      },
+      {
+        "headline": "Principal analyst responsible for compiling PII/PHI data for a Marketing rebranding project, resulting in the successful mailing of 130,000+ new ID cards and booklets.",
+        "context": "During the summer of 2018, the Marketing department pushed a high-visibility project in conjunction with a logo change. The objective was to send out new ID Cards showcasing the new logo and member packets that included information about the change and the direction of the company. The challenge was threefold: (1) the recent adoption of a new claims processing platform necessitated new data source mappings; (2) new fields were to be added to the ID cards and member packets that were not present in the previous versions; (3) the expectation of replacing the old system with the new one which I was to implement. Because this project was of high-visibility, significant testing needed to be performed to ensure accuracy and correctness. I performed rapid prototyping with Python--primarily with the use of the Pandas library for data manipulation and analysis--and SQL. Regular correspondence with a project manager from Marketing, the Marketing director and a project manager from the partner company that performed the printing and distribution of member material was necessary. After weeks of concerted effort, we reached an approach that satisfied all parties involved and resulted in the successful mailing of more than 130,000 ID cards and member packets. The new process went into production where it continued to serve over 8,000 ID cards and member packets either as replacements or for completely new members.",
+        "skills": [
+          "project management",
+          " communication",
+          " python",
+          " sql",
+          " data analysis",
+          " data manipulation",
+          " pandas"
+        ]
+      },
+      {
+        "headline": "Leveraged Python to identify clusters of bugs in Medi-Cal encounter submissions, driving targeted development and scorecard enhancement efforts within a quarter.",
+        "context": "I was tasked with performing root cause analysis on why one particular dimension in our scorecards--our Medi-Cal encounter submissions error rates--had not been improving despite development efforts in the area. While this was not my primary domain of expertise, the task had fallen upon me as I had shown much proficiency in root cause analysis of large-scale issues and rapid prototyping with Python; furthermore, there had been some doubts as to the development team's understanding of the overarching problems. The main challenge was that there wasn't an established process for analyzing trends in our encounter submission errors, not even a database I could query with SQL. Analysis would have to be performed on several hundred thousand raw semi-structured files, totaling close to a million lines of error codes. The errors ranged from minor to severe and conformed to a format that required much time to understand. On top of this challenge, none of the developers familiar with encounter submissions had the bandwidth to work on this full-time (as it was in the early days of the pandemic, during a time the company was facing many challenges with headcount). Formalizing a robust process for analyzing these errors would also have taken too much time and effort, and I simply did not have the bandwidth at the time. However, I realized I could approach this via a different direction: using natural language processing. Using Python and a library called Gensim, I managed to group the errors into clusters, reducing nearly one million lines into about 20 distinct error \"categories\". I presented my findings and the insight I provided allowed the development team to target development in a few key areas. My data also allowed the team to recognize that certain minor errors caused cascading failures that directly contributed to severe errors. With the insight gained, the development team had enough information to improve our scorecard within a quarter.",
+        "skills": [
+          "python",
+          "data analysis",
+          "pandas",
+          " gensim",
+          " natural language processing"
+        ]
+      },
+      {
+        "headline": "Implemented event-driven ActiveBatch workflows using Python and PowerShell, resulting in a reduction of manual operator intervention and decreased error rates.",
+        "context": "The company was using a job scheduler platform called ActiveBatch, and while this provided many useful tools for automating IT operations in a simple-to-use GUI, it lacked more robust features that were of importance to our organization. A couple of these missing features are: (1) the ability to poll remote files on an FTP server; (2) event-driven workflows based on filesystem activity on a Windows server (this functionality had been implemented in the product, but was found to be unreliable). What the platform did allow, however, is the use of custom scripts, and as the subject matter expert for IT automation, I took on the role of principal developer to create tools with the necessary functionality. One such tools relied on Python, and in particular a library called Paramiko, to facilitate remote FTP polling; in using Python, I had full control regarding: the file selection criteria; the workflow triggering logic; and robust logging. Another tool facilitated the use of Python and  Watchdog, a cross-platform library that allows for the monitoring of filesystem changes; this allowed us to monitor files going in and out, and automatically trigger workflows. Additionally, all the logs were catalogued inside a SQL database, allowing analysts to easily query trends or perform root cause analysis using SQL. Lastly, I created Powershell scripts that allowed for the seamless integration of these Python programs into our job scheduler ActiveBatch. With the introduction of these tools, we managed to decrease error rates and removed the need for a dedicated operator to perform the previously manual tasks.",
+        "skills": [
+          "python",
+          "powershell",
+          "automation",
+          "paramiko",
+          "watchdog",
+          "windows",
+          "ftp",
+          "sql"
+        ]
+      }
+    ],
+    "company": "Santa Clara Family Health Plan",
+    "jobTitle": "Business Systems Analyst",
+    "startDate": "2017-10-01",
+    "endDate": "2021-02-01",
+    "description": [
+      " Coordinated process improvement projects with IT developers and business units",
+      " Performed Root Cause Analysis and remediation of large scale production issues",
+      " Wrote business requirements documentation for new IT initiatives",
+      " Designed KPI dashboards",
+      " Served as subject matter expert for IT operations automation"
+    ],
+    "descriptionContext": "While my official title was Business Systems Analyst, I fulfilled many roles in this job. My proficiency with Python and shell scripting made me the de facto \"automation guy\" and I was involved in many stages, from ideation and prototyping, to fulfillment. Furthermore, my proficiency in data analytics using Excel spreadsheets, SQL and Pandas--a Python data analysis and manipulation library--made me adept at performing root cause and exploratory analysis. I often relied upon to troubleshoot, remediate and improve large-scale production processes. My skillset also made me extremely effective and formulating and implementing solutions on a tight deadline. Overall, my experience at this company encompassed many roles, responsibilities and skills. ",
+    "personalNote": "I wore many hats at this job and fulfilled the role of data analyst, project manager, developer and resident automation expert. I was *the* automation guy and fondly referred to as \"ActiveBatch man\" by my close colleagues."
+  },
+  {
+    "accomplishments": [
+      {
+        "headline": "Collaborated with field technicians on an experiment for tracking ticket difficulty, identifying regions with greater need for staffing based on ticket volume and tech stack",
+        "context": "In an effort to better understand staffing needs, I collaborated with full-time field technicians on a \"friction tracking\" experiment. This entailed a new process for reporting ticket difficulty and identifying need based on subjective \"friction\" metrics.",
+        "skills": [
+          "sql",
+          "data analysis",
+          "data visualization"
+        ]
+      }
+    ],
+    "company": "Google",
+    "jobTitle": "Corporate Engineering Intern",
+    "startDate": "2017-05-30",
+    "endDate": "2017-08-30",
+    "description": [
+      " Provided in-person and remote technical support",
+      " Collaborate a global team of technicians and SRE teams to remediate T3+ bugs",
+      " Contributed to analytics projects"
+    ],
+    "personalNote": "",
+    "descriptionContext": "As a field technician, my work put me up against a variety of issues ranging from hardware to software. The ability to learn quickly on the job was a crucial aspect of the role. Novel issues would quickly become the dominant issue for an entire day or the entire week, and our role as field technicians was to be on top of these issues at all times. Communication and the ability to research quickly, while having a significant understanding of hardware and software nuances (especially pertaining to operating systems), are both indispensable skills. On top of my responsibilities as field technician, I also contributed to analytics projects that required a keen eye, an analytic mindset, and the ability to use SQL.  "
+  },
+  {
+    "company": "Google",
+    "jobTitle": "Corporate Engineering Intern",
+    "startDate": "2016-05-23",
+    "endDate": "2016-08-26",
+    "description": [
+      " Field technician",
+      " Remediate a variety of support issues at the help desk (AKA \"Techstop\") and on the field"
+    ],
+    "personalNote": "",
+    "accomplishments": [
+      {
+        "headline": "Identified out-of-date mobile device loaners with SQL and sent mass emails, achieving an 87% return rate.",
+        "context": "Using SQL, I managed to identify out-of-date mobile device loaners and facilitated their return by sending out mass emails.",
+        "skills": [
+          "sql",
+          "data analysis",
+          "communication"
+        ]
+      }
+    ],
+    "descriptionContext": ""
+  }
+]

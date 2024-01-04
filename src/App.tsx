@@ -13,14 +13,15 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import ChatDrawerSection from "./components/Chat/ChatDrawerSection";
 import FitCheck from "./components/FitCheck/FitCheck";
-import AddWorkHistoryButton from "./components/WorkHistory/AddWorkHistoryButton";
 import WorkHistoryForm from "./components/WorkHistory/WorkHistoryForm";
 import WorkHistoryFormValues from "./components/WorkHistory/types";
 import WorkTimelineItem from "./components/WorkTimeline/WorkTimelineItem";
+import jsonData from "../workhistory.json";
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [workHistory, setWorkHistory] = useState<WorkHistoryFormValues[]>([]);
+  const [workHistory, setWorkHistory] =
+    useState<WorkHistoryFormValues[]>(jsonData);
   const [selectedEditHistory, setSelectedEditHistory] =
     useState<WorkHistoryFormValues>();
   const [selectedChatItems, setSelectedChatItems] =
@@ -33,9 +34,13 @@ function App() {
     setReplaceIndex(undefined);
   };
 
-  const saveHistory = (items: WorkHistoryFormValues[]) => {
-    localStorage.setItem("resumai-work-history", JSON.stringify(items));
-  };
+  // const saveHistory = (items: WorkHistoryFormValues[]) => {
+  //   localStorage.setItem("resumai-work-history", JSON.stringify(items));
+  // };
+
+  useEffect(() => {
+    console.log(jsonData);
+  }, []);
 
   const handleSubmit = (
     values: WorkHistoryFormValues,
@@ -58,24 +63,19 @@ function App() {
     flushReplace();
   };
 
-  const handleAddNewEntry = () => {
-    flushReplace();
-    setModalOpen(true);
-  };
+  // const handleDeleteEntry = (entry: WorkHistoryFormValues) => {
+  //   const newWorkHistory = workHistory.filter((item) => item !== entry);
+  //   setWorkHistory(newWorkHistory);
+  //   saveHistory(newWorkHistory);
+  //   flushReplace();
+  // };
 
-  const handleDeleteEntry = (entry: WorkHistoryFormValues) => {
-    const newWorkHistory = workHistory.filter((item) => item !== entry);
-    setWorkHistory(newWorkHistory);
-    saveHistory(newWorkHistory);
-    flushReplace();
-  };
-
-  const handleEditEntry = (entry: WorkHistoryFormValues) => {
-    const editHistoryIndex = workHistory.indexOf(entry);
-    setSelectedEditHistory(workHistory[editHistoryIndex]);
-    setReplaceIndex(editHistoryIndex);
-    setModalOpen(true);
-  };
+  // const handleEditEntry = (entry: WorkHistoryFormValues) => {
+  //   const editHistoryIndex = workHistory.indexOf(entry);
+  //   setSelectedEditHistory(workHistory[editHistoryIndex]);
+  //   setReplaceIndex(editHistoryIndex);
+  //   setModalOpen(true);
+  // };
 
   const handleCloseForm = () => {
     flushReplace();
@@ -90,11 +90,11 @@ function App() {
     setSelectedChatItems(undefined);
   };
 
-  useEffect(() => {
-    if (workHistory.length > 0) {
-      saveHistory(workHistory);
-    }
-  }, [workHistory, selectedEditHistory]);
+  // useEffect(() => {
+  //   if (workHistory.length > 0) {
+  //     saveHistory(workHistory);
+  //   }
+  // }, [workHistory, selectedEditHistory]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -138,7 +138,6 @@ function App() {
               workHistory={selectedEditHistory}
               replaceIndex={replaceIndex}
             />
-            <AddWorkHistoryButton onAddWorkHistory={handleAddNewEntry} />
             <Flex direction="column" align="left" m={4} pl={10} pr={10}>
               {workHistory.map((item, idx) => (
                 <WorkTimelineItem
@@ -147,8 +146,6 @@ function App() {
                   index={idx}
                   workHistoryItem={item}
                   onChatClick={handleOpenChat}
-                  onDelete={handleDeleteEntry}
-                  onEdit={handleEditEntry}
                 />
               ))}
             </Flex>

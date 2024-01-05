@@ -1,4 +1,9 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
   Center,
   Fade,
   Flex,
@@ -17,6 +22,7 @@ import WorkHistoryForm from "./components/WorkHistory/WorkHistoryForm";
 import WorkHistoryFormValues from "./components/WorkHistory/types";
 import WorkTimelineItem from "./components/WorkTimeline/WorkTimelineItem";
 import jsonData from "../workhistory.json";
+import { isMobile } from "react-device-detect";
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -107,57 +113,73 @@ function App() {
   }, []);
 
   return (
-    <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
-      <Fade in={!tabsHidden} transition={{ enter: { duration: 2, delay: 1 } }}>
-        <Center>
-          <TabList
-            textAlign="center"
-            bgColor="tomato"
-            rounded="full"
-            minWidth="400px"
-            width="600px"
-            hidden={tabsHidden}
-          >
-            <Tab>Ask Me Anything</Tab>
-            <Tab>Fit Check</Tab>
-          </TabList>
-        </Center>
-      </Fade>
+    <>
+      <Box maxWidth="300px">
+        {isMobile && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>You are viewing this from a mobile device.</AlertTitle>
+            <AlertDescription>
+              Your experience may be degraded.
+            </AlertDescription>
+          </Alert>
+        )}
+      </Box>
+      <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
+        <Fade
+          in={!tabsHidden}
+          transition={{ enter: { duration: 2, delay: 1 } }}
+        >
+          <Center>
+            <TabList
+              textAlign="center"
+              bgColor="tomato"
+              rounded="full"
+              minWidth="400px"
+              width="600px"
+              hidden={tabsHidden}
+            >
+              <Tab>Ask Me Anything</Tab>
+              <Tab>Fit Check</Tab>
+            </TabList>
+          </Center>
+        </Fade>
 
-      <TabPanels>
-        <TabPanel>
-          <VStack spacing="24px">
-            <WorkHistoryForm
-              isOpen={modalOpen}
-              onClose={handleCloseForm}
-              onSubmit={handleSubmit}
-              workHistory={selectedEditHistory}
-              replaceIndex={replaceIndex}
-            />
-            <Flex direction="column" align="left" m={4} pl={10} pr={10}>
-              {workHistory.map((item, idx) => (
-                <WorkTimelineItem
-                  expanded={false}
-                  key={idx}
-                  index={idx}
-                  workHistoryItem={item}
-                  onChatClick={handleOpenChat}
-                />
-              ))}
-            </Flex>
-            {selectedChatItems && (
-              <ChatDrawerSection
-                workHistoryItems={selectedChatItems}
-                handleCloseChat={handleCloseChat}
+        <TabPanels>
+          <TabPanel>
+            <VStack spacing="24px">
+              <WorkHistoryForm
+                isOpen={modalOpen}
+                onClose={handleCloseForm}
+                onSubmit={handleSubmit}
+                workHistory={selectedEditHistory}
+                replaceIndex={replaceIndex}
               />
-            )}
-          </VStack>
-        </TabPanel>
-        <TabPanel>
-          <FitCheck workHistoryItems={workHistory}></FitCheck>
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
+              <Flex direction="column" align="left" m={4} pl={10} pr={10}>
+                {workHistory.map((item, idx) => (
+                  <WorkTimelineItem
+                    expanded={false}
+                    key={idx}
+                    index={idx}
+                    workHistoryItem={item}
+                    onChatClick={handleOpenChat}
+                  />
+                ))}
+              </Flex>
+              {selectedChatItems && (
+                <ChatDrawerSection
+                  workHistoryItems={selectedChatItems}
+                  handleCloseChat={handleCloseChat}
+                />
+              )}
+            </VStack>
+          </TabPanel>
+          <TabPanel>
+            <FitCheck workHistoryItems={workHistory}></FitCheck>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </>
   );
 }
 

@@ -1,9 +1,12 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
+  Button,
   Center,
   Fade,
   Flex,
@@ -13,16 +16,17 @@ import {
   TabPanels,
   Tabs,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
+import jsonData from "../workhistory.json";
 import "./App.css";
 import ChatDrawerSection from "./components/Chat/ChatDrawerSection";
 import FitCheck from "./components/FitCheck/FitCheck";
 import WorkHistoryForm from "./components/WorkHistory/WorkHistoryForm";
 import WorkHistoryFormValues from "./components/WorkHistory/types";
 import WorkTimelineItem from "./components/WorkTimeline/WorkTimelineItem";
-import jsonData from "../workhistory.json";
-import { isMobile } from "react-device-detect";
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,6 +38,16 @@ function App() {
     useState<WorkHistoryFormValues[]>();
   const [replaceIndex, setReplaceIndex] = useState<number>();
   const [tabsHidden, setTabsHidden] = useState(true);
+  const {
+    isOpen: mobileAlertIsOpen,
+    onOpen: mobileAlertOnOpen,
+    onClose: mobileAlertOnClose,
+  } = useDisclosure();
+  const acceptDisclosureRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    isMobile && mobileAlertOnOpen();
+  }, []);
 
   const flushReplace = () => {
     setSelectedEditHistory(undefined);
@@ -116,69 +130,91 @@ function App() {
     <>
       <Box maxWidth="300px">
         {isMobile && (
-          <Alert status="error">
-            <AlertIcon />
-            <AlertTitle>You are viewing this from a mobile device.</AlertTitle>
-            <AlertDescription>
-              Your experience may be degraded.
-            </AlertDescription>
-          </Alert>
+          <AlertDialog
+            isOpen={mobileAlertIsOpen}
+            leastDestructiveRef={acceptDisclosureRef}
+            onClose={mobileAlertOnClose}
+          >
+            <AlertDialogOverlay>
+              <AlertDialogContent p={2} m={2}>
+                <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                  Mobile device detected
+                </AlertDialogHeader>
+
+                <AlertDialogBody>
+                  This site is not optimized for mobile devices. Experience will
+                  be degraded. For a better experience, use a laptop or PC.
+                </AlertDialogBody>
+
+                <AlertDialogFooter>
+                  <Button
+                    ref={acceptDisclosureRef}
+                    onClick={mobileAlertOnClose}
+                  >
+                    Okay
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
         )}
       </Box>
-      <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
-        <Fade
-          in={!tabsHidden}
-          transition={{ enter: { duration: 2, delay: 1 } }}
-        >
-          <Center>
-            <TabList
-              textAlign="center"
-              bgColor="tomato"
-              rounded="full"
-              minWidth="400px"
-              width="600px"
-              hidden={tabsHidden}
-            >
-              <Tab>Ask Me Anything</Tab>
-              <Tab>Fit Check</Tab>
-            </TabList>
-          </Center>
-        </Fade>
+      {!mobileAlertIsOpen && (
+        <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
+          <Fade
+            in={!tabsHidden}
+            transition={{ enter: { duration: 2, delay: 1 } }}
+          >
+            <Center>
+              <TabList
+                textAlign="center"
+                bgColor="tomato"
+                rounded="full"
+                minWidth="400px"
+                width="600px"
+                hidden={tabsHidden}
+              >
+                <Tab>Ask Me Anything</Tab>
+                <Tab>Fit Check</Tab>
+              </TabList>
+            </Center>
+          </Fade>
 
-        <TabPanels>
-          <TabPanel>
-            <VStack spacing="24px">
-              <WorkHistoryForm
-                isOpen={modalOpen}
-                onClose={handleCloseForm}
-                onSubmit={handleSubmit}
-                workHistory={selectedEditHistory}
-                replaceIndex={replaceIndex}
-              />
-              <Flex direction="column" align="left" m={4} pl={10} pr={10}>
-                {workHistory.map((item, idx) => (
-                  <WorkTimelineItem
-                    expanded={false}
-                    key={idx}
-                    index={idx}
-                    workHistoryItem={item}
-                    onChatClick={handleOpenChat}
-                  />
-                ))}
-              </Flex>
-              {selectedChatItems && (
-                <ChatDrawerSection
-                  workHistoryItems={selectedChatItems}
-                  handleCloseChat={handleCloseChat}
+          <TabPanels>
+            <TabPanel>
+              <VStack spacing="24px">
+                <WorkHistoryForm
+                  isOpen={modalOpen}
+                  onClose={handleCloseForm}
+                  onSubmit={handleSubmit}
+                  workHistory={selectedEditHistory}
+                  replaceIndex={replaceIndex}
                 />
-              )}
-            </VStack>
-          </TabPanel>
-          <TabPanel>
-            <FitCheck workHistoryItems={workHistory}></FitCheck>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+                <Flex direction="column" align="left" m={4} pl={10} pr={10}>
+                  {workHistory.map((item, idx) => (
+                    <WorkTimelineItem
+                      expanded={false}
+                      key={idx}
+                      index={idx}
+                      workHistoryItem={item}
+                      onChatClick={handleOpenChat}
+                    />
+                  ))}
+                </Flex>
+                {selectedChatItems && (
+                  <ChatDrawerSection
+                    workHistoryItems={selectedChatItems}
+                    handleCloseChat={handleCloseChat}
+                  />
+                )}
+              </VStack>
+            </TabPanel>
+            <TabPanel>
+              <FitCheck workHistoryItems={workHistory}></FitCheck>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      )}
     </>
   );
 }

@@ -38,10 +38,6 @@ function App() {
   //   localStorage.setItem("resumai-work-history", JSON.stringify(items));
   // };
 
-  useEffect(() => {
-    console.log(jsonData);
-  }, []);
-
   const handleSubmit = (
     values: WorkHistoryFormValues,
     replaceIndex?: number

@@ -142,8 +142,9 @@ function App() {
                 </AlertDialogHeader>
 
                 <AlertDialogBody>
-                  This site is not optimized for mobile devices. Experience will
-                  be degraded. For a better experience, use a laptop or PC.
+                  This site is not optimized for mobile devices (yet).
+                  Experience will be degraded. For a better experience, use a
+                  laptop or PC.
                 </AlertDialogBody>
 
                 <AlertDialogFooter>

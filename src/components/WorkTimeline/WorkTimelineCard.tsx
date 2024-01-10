@@ -59,7 +59,13 @@ const WorkTimelineCard = ({ workHistoryItem, onChatClick }: Props) => {
   }, []);
 
   return (
-    <Box w="inherit" maxW="inherit" className="main-card">
+    <Box
+      w="inherit"
+      maxW="inherit"
+      maxH="inherit"
+      className="main-card"
+      overflowY="scroll"
+    >
       <Card w="inherit">
         <CardHeader>
           <VStack spacing={2}>

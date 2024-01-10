@@ -1,25 +1,17 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Box,
-  Button,
   Center,
   Fade,
   Flex,
+  Grid,
+  GridItem,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
   VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { useEffect, useState } from "react";
 import jsonData from "../workhistory.json";
 import "./App.css";
 import ChatDrawerSection from "./components/Chat/ChatDrawerSection";
@@ -38,16 +30,6 @@ function App() {
     useState<WorkHistoryFormValues[]>();
   const [replaceIndex, setReplaceIndex] = useState<number>();
   const [tabsHidden, setTabsHidden] = useState(true);
-  const {
-    isOpen: mobileAlertIsOpen,
-    onOpen: mobileAlertOnOpen,
-    onClose: mobileAlertOnClose,
-  } = useDisclosure();
-  const acceptDisclosureRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    isMobile && mobileAlertOnOpen();
-  }, []);
 
   const flushReplace = () => {
     setSelectedEditHistory(undefined);
@@ -79,20 +61,6 @@ function App() {
     flushReplace();
   };
 
-  // const handleDeleteEntry = (entry: WorkHistoryFormValues) => {
-  //   const newWorkHistory = workHistory.filter((item) => item !== entry);
-  //   setWorkHistory(newWorkHistory);
-  //   saveHistory(newWorkHistory);
-  //   flushReplace();
-  // };
-
-  // const handleEditEntry = (entry: WorkHistoryFormValues) => {
-  //   const editHistoryIndex = workHistory.indexOf(entry);
-  //   setSelectedEditHistory(workHistory[editHistoryIndex]);
-  //   setReplaceIndex(editHistoryIndex);
-  //   setModalOpen(true);
-  // };
-
   const handleCloseForm = () => {
     flushReplace();
     setModalOpen(false);
@@ -105,12 +73,6 @@ function App() {
   const handleCloseChat = () => {
     setSelectedChatItems(undefined);
   };
-
-  // useEffect(() => {
-  //   if (workHistory.length > 0) {
-  //     saveHistory(workHistory);
-  //   }
-  // }, [workHistory, selectedEditHistory]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -127,40 +89,15 @@ function App() {
   }, []);
 
   return (
-    <>
-      <Box maxWidth="300px">
-        {isMobile && (
-          <AlertDialog
-            isOpen={mobileAlertIsOpen}
-            leastDestructiveRef={acceptDisclosureRef}
-            onClose={mobileAlertOnClose}
-          >
-            <AlertDialogOverlay>
-              <AlertDialogContent p={2} m={2}>
-                <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                  Mobile device detected
-                </AlertDialogHeader>
-
-                <AlertDialogBody>
-                  This site is not optimized for mobile devices (yet).
-                  Experience will be degraded. For a better experience, use a
-                  laptop or PC.
-                </AlertDialogBody>
-
-                <AlertDialogFooter>
-                  <Button
-                    ref={acceptDisclosureRef}
-                    onClick={mobileAlertOnClose}
-                  >
-                    Okay
-                  </Button>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialogOverlay>
-          </AlertDialog>
-        )}
-      </Box>
-      {!mobileAlertIsOpen && (
+    <Grid
+      templateAreas={{
+        lg: `"aside main aside"`,
+        md: `"main"`,
+      }}
+      templateRows={`"1fr"`}
+      templateColumns={{ lg: `"100px 1fr 100px"`, md: `"1fr"` }}
+    >
+      <GridItem gridArea="main">
         <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
           <Fade
             in={!tabsHidden}
@@ -171,8 +108,7 @@ function App() {
                 textAlign="center"
                 bgColor="tomato"
                 rounded="full"
-                minWidth="400px"
-                width="600px"
+                width={["200px", "400px", "600px"]}
                 hidden={tabsHidden}
               >
                 <Tab>Ask Me Anything</Tab>
@@ -191,7 +127,7 @@ function App() {
                   workHistory={selectedEditHistory}
                   replaceIndex={replaceIndex}
                 />
-                <Flex direction="column" align="left" m={4} pl={10} pr={10}>
+                <Flex direction="column">
                   {workHistory.map((item, idx) => (
                     <WorkTimelineItem
                       expanded={false}
@@ -215,8 +151,8 @@ function App() {
             </TabPanel>
           </TabPanels>
         </Tabs>
-      )}
-    </>
+      </GridItem>
+    </Grid>
   );
 }
 

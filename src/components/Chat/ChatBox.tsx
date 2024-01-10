@@ -1,6 +1,5 @@
 import {
   Box,
-  Center,
   HStack,
   IconButton,
   Input,
@@ -16,7 +15,6 @@ import useTimelineItemRetriever from "../../hooks/useTimelineItemRetriever";
 import { Response } from "../../services/timelineItemRetriever";
 import WorkHistoryFormValues from "../WorkHistory/types";
 import ChatMessage from "./ChatMessage";
-import "./animations.css";
 
 interface Props {
   workHistoryItems: WorkHistoryFormValues[];
@@ -106,66 +104,60 @@ const ChatBox = ({ workHistoryItems }: Props) => {
     setIsLoading(true);
   };
   return (
-    <Center>
-      <VStack h="90vh" w="60vw">
-        <Box
-          borderRadius={10}
-          bgColor="gray.200"
-          shadow="lg"
-          overflowY="scroll"
-          minH="40vh"
-          maxH="80vh"
-          h="80vh"
-          minW="60vw"
-          w="60vw"
-          ref={chatWindowRef}
-        >
-          {chatHistory.map((message) => (
-            <ChatMessage message={message} key={message.seq} />
-          ))}
-          {isLoading && <ChatMessage isLoading={isLoading} />}
-        </Box>
-        <HStack w="inherit">
-          <InputGroup>
-            <Input
-              className={!isLoading ? "ripple" : ""}
-              bgColor="gray.300"
-              variant="outline"
-              shadow="lg"
-              title={isLoading ? "🤔" : "Ask a question"}
-              placeholder={isLoading ? "Thinking..." : "Ask a question"}
-              onChange={(e) => setQuery(e.target.value)}
-              value={query}
-              isDisabled={isLoading}
-              onKeyUp={(e) => {
-                if (e.key === "Enter") {
-                  handleSend();
-                }
-              }}
-            />
-            <InputRightElement>
-              {isLoading ? (
-                <PuffLoader
-                  cssOverride={{ opacity: 0.5 }}
-                  color="black"
-                  size="25px"
-                />
-              ) : (
-                <IconButton
-                  aria-label="send-query"
-                  title="Send Query"
-                  icon={<LuSend />}
-                  h="100%"
-                  variant="ghost"
-                  rounded="full"
-                  onClick={() => handleSend()}
-                />
-              )}
-            </InputRightElement>
-          </InputGroup>
-        </HStack>
-      </VStack>
-    </Center>
+    <VStack w="inherit" h="inherit">
+      <Box
+        borderRadius={10}
+        bgColor="gray.200"
+        shadow="lg"
+        overflowY="scroll"
+        h="inherit"
+        w="inherit"
+        ref={chatWindowRef}
+      >
+        {chatHistory.map((message) => (
+          <ChatMessage message={message} key={message.seq} />
+        ))}
+        {isLoading && <ChatMessage isLoading={isLoading} />}
+      </Box>
+      <HStack w="inherit">
+        <InputGroup>
+          <Input
+            className={!isLoading ? "ripple" : ""}
+            bgColor="gray.300"
+            variant="outline"
+            shadow="lg"
+            title={isLoading ? "🤔" : "Ask a question"}
+            placeholder={isLoading ? "Thinking..." : "Ask a question"}
+            onChange={(e) => setQuery(e.target.value)}
+            value={query}
+            isDisabled={isLoading}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                handleSend();
+              }
+            }}
+          />
+          <InputRightElement>
+            {isLoading ? (
+              <PuffLoader
+                cssOverride={{ opacity: 0.5 }}
+                color="black"
+                size="25px"
+              />
+            ) : (
+              <IconButton
+                aria-label="send-query"
+                title="Send Query"
+                icon={<LuSend />}
+                size="25px"
+                variant="ghost"
+                onClick={() => handleSend()}
+              />
+            )}
+          </InputRightElement>
+        </InputGroup>
+      </HStack>
+    </VStack>
   );
 };
 

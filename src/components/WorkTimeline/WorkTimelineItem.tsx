@@ -87,7 +87,7 @@ const WorkTimelineItem = ({
     >
       <Box pt={2} pb={2}>
         <Flex direction="row">
-          <HStack spacing={4} pb={1}>
+          <HStack spacing={4} pb={1} pl="2px">
             <Icon as={isCurrent ? GoDotFill : GoDot} position="absolute" />
             <HStack align="baseline">
               {isCurrent ? (
@@ -108,19 +108,14 @@ const WorkTimelineItem = ({
         </Flex>
         <HStack spacing={2}>
           <Flex m={2}>
-            <Box bgColor="tomato" w="2px" h="inherit" rounded="full" />
+            <Box pr="2px" bgColor="tomato" w="1px" h="inherit" rounded="full" />
             <Flex
               className="main-content"
               bg="papayawhip"
-              // w="100%"
               direction="row"
               shadow="md"
-              w="1000px"
-              minW="400px"
-              maxW="1000px"
-              h="100%"
             >
-              <VStack w="980px" minW="380px" maxW="980px" spacing={2}>
+              <VStack spacing={2}>
                 <WorkTimelineCard
                   workHistoryItem={workHistoryItem}
                   onChatClick={onChatClick}
@@ -130,7 +125,7 @@ const WorkTimelineItem = ({
           </Flex>
         </HStack>
         <Flex direction="row">
-          <HStack spacing={4} pb={1}>
+          <HStack spacing={4} pb={1} pl="2px">
             <Icon as={GoDot} position="absolute" />
             <Text pl="20px">{workHistoryItem.startDate}</Text>
           </HStack>

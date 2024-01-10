@@ -1,4 +1,11 @@
-import { Box, HStack, IconButton, Spacer, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  IconButton,
+  Spacer,
+  Stack,
+  Textarea,
+} from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { LuSend } from "react-icons/lu";
 import PuffLoader from "react-spinners/PuffLoader";
@@ -67,40 +74,42 @@ const FitCheck = ({ workHistoryItems }: Props) => {
 
   return (
     <>
-      <HStack>
+      <Stack direction={{ base: "column", lg: "row" }}>
         <Textarea
           height="80vh"
-          width="100vw"
+          width={["200px", "400px", "600px"]}
           value={query}
           placeholder={placeholders.textarea}
           isDisabled={isLoading}
           onChange={(e) => setQuery(e.target?.value)}
           shadow="lg"
         />
-        <Box height="50px" width="50px">
-          {isLoading ? (
-            <PuffLoader
-              cssOverride={{ opacity: 0.5 }}
-              color="black"
-              size="40px"
-            />
-          ) : (
-            <IconButton
-              className="ripple"
-              aria-label="submit"
-              title="Submit"
-              icon={<LuSend />}
-              onClick={() => handleSend()}
-            />
-          )}
-        </Box>
+        <Center>
+          <Box height="50px" width="50px" p={1}>
+            {isLoading ? (
+              <PuffLoader
+                cssOverride={{ opacity: 0.5 }}
+                color="black"
+                size="40px"
+              />
+            ) : (
+              <IconButton
+                className="ripple"
+                aria-label="submit"
+                title="Submit"
+                icon={<LuSend />}
+                onClick={() => handleSend()}
+              />
+            )}
+          </Box>
+        </Center>
         <Box
           borderRadius={10}
           bgColor="gray.200"
           shadow="lg"
           overflowY="scroll"
           height="80vh"
-          width="100vw"
+          width={["200px", "400px", "600px"]}
           ref={chatWindowRef}
         >
           {chatHistory.map((message) => (
@@ -109,7 +118,7 @@ const FitCheck = ({ workHistoryItems }: Props) => {
           {isLoading && <ChatMessage isLoading={isLoading} />}
         </Box>
         <Spacer />
-      </HStack>
+      </Stack>
     </>
   );
 };

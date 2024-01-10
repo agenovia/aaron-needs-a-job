@@ -1,10 +1,11 @@
 import {
   Box,
+  Center,
   Drawer,
   DrawerCloseButton,
   DrawerContent,
   DrawerOverlay,
-  HStack,
+  Stack,
 } from "@chakra-ui/react";
 import WorkHistoryFormValues from "../WorkHistory/types";
 import WorkTimelineCard from "../WorkTimeline/WorkTimelineCard";
@@ -48,17 +49,42 @@ const ChatDrawerSection = ({ workHistoryItems, handleCloseChat }: Props) => {
               boxShadow="dark-lg"
               rounded="full"
             />
-            <HStack m={4} justifyContent="space-between">
-              <Box maxH="80vh" overflowY="scroll" boxShadow="lg" p={1}>
-                {workHistoryItems.map((item, idx) => (
-                  <WorkTimelineCard
-                    key={`chat-drawer-card-${idx}`}
-                    workHistoryItem={item}
-                  />
-                ))}
-              </Box>
-              <ChatBox workHistoryItems={workHistoryItems} />
-            </HStack>
+            <Box mt={4} overflowY="scroll">
+              <Stack
+                m={4}
+                justifyContent="space-between"
+                direction={{ base: "column", lg: "row" }}
+              >
+                <Center>
+                  <Box
+                    overflowY="scroll"
+                    p={1}
+                    maxHeight="75vh"
+                    w={["90vw", "90vw", "90vw", "60vw"]}
+                    borderRadius={10}
+                    bgColor="transparent"
+                  >
+                    {workHistoryItems.map((item, idx) => (
+                      <WorkTimelineCard
+                        key={`chat-drawer-card-${idx}`}
+                        workHistoryItem={item}
+                      />
+                    ))}
+                  </Box>
+                </Center>
+                <Center>
+                  <Box
+                    p={1}
+                    height="75vh"
+                    w={["90vw", "90vw", "90vw", "60vw"]}
+                    borderRadius={10}
+                    bgColor="transparent"
+                  >
+                    <ChatBox workHistoryItems={workHistoryItems} />
+                  </Box>
+                </Center>
+              </Stack>
+            </Box>
           </>
         )}
       </DrawerContent>

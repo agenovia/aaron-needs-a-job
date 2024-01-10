@@ -77,7 +77,7 @@ const FitCheck = ({ workHistoryItems }: Props) => {
       <Stack direction={{ base: "column", lg: "row" }}>
         <Textarea
           height="80vh"
-          width={["200px", "400px", "600px"]}
+          width={["400px", "500px", "600px"]}
           value={query}
           placeholder={placeholders.textarea}
           isDisabled={isLoading}
@@ -109,7 +109,7 @@ const FitCheck = ({ workHistoryItems }: Props) => {
           shadow="lg"
           overflowY="scroll"
           height="80vh"
-          width={["200px", "400px", "600px"]}
+          width={["400px", "500px", "600px"]}
           ref={chatWindowRef}
         >
           {chatHistory.map((message) => (

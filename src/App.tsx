@@ -97,7 +97,7 @@ function App() {
       templateRows={`"1fr"`}
       templateColumns={{ lg: `"100px 1fr 100px"`, md: `"1fr"` }}
     >
-      <GridItem gridArea="main">
+      <GridItem gridArea="main" pt={2}>
         <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
           <Fade
             in={!tabsHidden}

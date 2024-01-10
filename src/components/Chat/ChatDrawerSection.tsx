@@ -49,11 +49,10 @@ const ChatDrawerSection = ({ workHistoryItems, handleCloseChat }: Props) => {
               boxShadow="dark-lg"
               rounded="full"
             />
-            <Box mt={4} overflowY="scroll">
+            <Box mt={4} overflowY="scroll" m={2} height="100%">
               <Stack
-                ml={2}
-                mr={2}
-                justifyContent="space-between"
+                gap={6}
+                justifyContent="space-around"
                 direction={{ base: "column", lg: "row" }}
               >
                 <Center>

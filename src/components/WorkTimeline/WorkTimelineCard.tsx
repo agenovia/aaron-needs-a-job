@@ -4,10 +4,12 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Center,
   HStack,
   Heading,
   Icon,
   IconButton,
+  Stack,
   Text,
   VStack,
   Wrap,
@@ -68,9 +70,13 @@ const WorkTimelineCard = ({ workHistoryItem, onChatClick }: Props) => {
     >
       <Card w="inherit">
         <CardHeader>
-          <VStack spacing={2}>
-            <HStack spacing={2}>
-              <Wrap>
+          <Center>
+            <Wrap>
+              <Stack
+                align="center"
+                spacing={2}
+                direction={{ base: "column", lg: "row" }}
+              >
                 <WrapItem>
                   <Badge
                     fontSize="xs"
@@ -112,9 +118,9 @@ const WorkTimelineCard = ({ workHistoryItem, onChatClick }: Props) => {
                     />
                   </WrapItem>
                 )}
-              </Wrap>
-            </HStack>
-          </VStack>
+              </Stack>
+            </Wrap>
+          </Center>
         </CardHeader>
         <CardBody textAlign="left" flexDirection="row">
           <Heading className="headings" size="sm">

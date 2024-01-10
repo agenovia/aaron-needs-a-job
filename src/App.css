@@ -21,3 +21,12 @@
       -webkit-box-shadow: 0 0 0 0 rgba(255,0,0, 0);
   }
 }
+
+
+
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

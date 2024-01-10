@@ -104,7 +104,7 @@ const ChatBox = ({ workHistoryItems }: Props) => {
     setIsLoading(true);
   };
   return (
-    <VStack w="inherit" h="inherit">
+    <VStack w="inherit" h="inherit" maxHeight="inherit">
       <Box
         borderRadius={10}
         bgColor="gray.200"

@@ -51,16 +51,16 @@ const ChatDrawerSection = ({ workHistoryItems, handleCloseChat }: Props) => {
             />
             <Box mt={4} overflowY="scroll">
               <Stack
-                m={4}
+                ml={2}
+                mr={2}
                 justifyContent="space-between"
                 direction={{ base: "column", lg: "row" }}
               >
                 <Center>
                   <Box
-                    overflowY="scroll"
                     p={1}
                     maxHeight="75vh"
-                    w={["90vw", "90vw", "90vw", "60vw"]}
+                    w={["90vw", "90vw", "90vw", "45vw"]}
                     borderRadius={10}
                     bgColor="transparent"
                   >
@@ -76,7 +76,8 @@ const ChatDrawerSection = ({ workHistoryItems, handleCloseChat }: Props) => {
                   <Box
                     p={1}
                     height="75vh"
-                    w={["90vw", "90vw", "90vw", "60vw"]}
+                    maxHeight={["450px", "550px", "750px"]}
+                    w={["90vw", "90vw", "90vw", "45vw"]}
                     borderRadius={10}
                     bgColor="transparent"
                   >

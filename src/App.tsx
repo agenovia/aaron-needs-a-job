@@ -91,18 +91,22 @@ function App() {
   return (
     <Grid
       templateAreas={{
-        lg: `"aside main aside"`,
-        md: `"main"`,
+        lg: `"aside nav aside"
+             "aside main aside"
+             `,
+        md: `"nav"
+             "main"
+             `,
       }}
-      templateRows={`"1fr"`}
+      templateRows={`"80px 1fr"`}
       templateColumns={{ lg: `"100px 1fr 100px"`, md: `"1fr"` }}
     >
-      <GridItem gridArea="main" pt={2}>
-        <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
-          <Fade
-            in={!tabsHidden}
-            transition={{ enter: { duration: 2, delay: 1 } }}
-          >
+      <Tabs variant="soft-rounded" colorScheme="orange" isFitted>
+        <Fade
+          in={!tabsHidden}
+          transition={{ enter: { duration: 2, delay: 1 } }}
+        >
+          <GridItem gridArea="nav" pt={2}>
             <Center>
               <TabList
                 textAlign="center"
@@ -115,8 +119,10 @@ function App() {
                 <Tab>Fit Check</Tab>
               </TabList>
             </Center>
-          </Fade>
+          </GridItem>
+        </Fade>
 
+        <GridItem gridArea="main" pt={2}>
           <TabPanels>
             <TabPanel>
               <VStack spacing="24px">
@@ -150,8 +156,8 @@ function App() {
               <FitCheck workHistoryItems={workHistory}></FitCheck>
             </TabPanel>
           </TabPanels>
-        </Tabs>
-      </GridItem>
+        </GridItem>
+      </Tabs>
     </Grid>
   );
 }

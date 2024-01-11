@@ -76,7 +76,7 @@ const FitCheck = ({ workHistoryItems }: Props) => {
     <>
       <Stack direction={{ base: "column", lg: "row" }}>
         <Textarea
-          height="80vh"
+          height="85vh"
           width={["350px", "450px", "600px"]}
           value={query}
           placeholder={placeholders.textarea}
@@ -108,7 +108,7 @@ const FitCheck = ({ workHistoryItems }: Props) => {
           bgColor="gray.200"
           shadow="lg"
           overflowY="scroll"
-          height="80vh"
+          height="85vh"
           width={["350px", "450px", "600px"]}
           ref={chatWindowRef}
         >

@@ -2,7 +2,7 @@ export const placeholders = {
   textarea: `Got a job description? Type or paste it in here and \
 click the submit button to see if my experience meets your needs.\n\n\
 For example:\n\
-\t"We are seeking a seasoned Senior Data Analyst with extensive SQL experience to join our dynamic team. If you excel in crafting complex SQL queries, optimizing databases, and leading ETL processes, we want to hear from you. As a leader in our data analytics team, you will leverage your expertise to mentor junior analysts, foster collaboration, and ensure the delivery of high-quality insights. Your strategic mindset will be crucial in translating business requirements into actionable data-driven solutions, providing valuable insights for strategic decision-making.
+\t"We are seeking a seasoned Senior Data Analyst with extensive SQL experience to join our dynamic team. If you excel in crafting complex SQL queries, optimizing databases, and leading ETL processes, we want to hear from you. As a leader in our data analytics team, you will leverage your expertise to mentor junior analysts, foster collaboration, and ensure the delivery of high-quality insights.
 
 Key Responsibilities:
 
